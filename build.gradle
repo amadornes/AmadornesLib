@@ -23,7 +23,8 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.1"
+actualVersion="1.0"
+version = "1.0"
 group= "es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AmadornesLib"
 
