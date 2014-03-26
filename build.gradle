@@ -22,8 +22,20 @@ group= "es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-co
 archivesBaseName = "AmadornesLib"
 
 minecraft {
-    version = "1.6.4-9.11.1.964"
+    version = "1.6.4-9.11.1.965"
     assetDir = "../Minecraft/assets"
+}
+
+logger.lifecycle "$archivesBaseName-$version"
+ 
+if (System.getenv("BUILD_NUMBER") != null) {
+    version = "MC${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
+}
+else if (new File(projectDir, '.git').exists()) {
+    def repo = grgit.repo('.')
+    version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
+} else {
+    version = "MC${minecraft.version}-$version-DEV"
 }
 
 
