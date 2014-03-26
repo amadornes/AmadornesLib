@@ -1,11 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
-        mvn {
+        maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        mvn {
+        maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
