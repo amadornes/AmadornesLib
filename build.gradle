@@ -22,7 +22,7 @@ group= "es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-co
 archivesBaseName = "AmadornesLib"
 
 minecraft {
-    version = "1.6.4-9.11.1.965"
+    version = "1.6.4-9.11.1.963"
     assetDir = "../Minecraft/assets"
 }
 
