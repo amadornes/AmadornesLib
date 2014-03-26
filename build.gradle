@@ -24,12 +24,12 @@ buildscript {
 apply plugin: 'forge'
 
 actualVersion="1.0"
-version = "1.0"
-group= "es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "AmadornesLib"
+version="1.0"
+group="es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName="AmadornesLib"
 
 minecraft {
-    version = "1.6.4-9.11.1.964"
+    version="1.6.4-9.11.1.964"
 }
 
 logger.lifecycle "$archivesBaseName-$version"
