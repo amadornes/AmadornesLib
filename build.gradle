@@ -17,6 +17,14 @@ group = 'es.amadornes.lib'
 version = "1.0"
 archivesBaseName = "AmadornesLib"
 
+dependencies {
+    def f = new File('dep/ccl.jar')
+    if (!f.exists()) {
+        new URL('http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
+    }
+    compile files( 'dep/ccl.jar')
+}
+
 minecraft {
 	version = "1.6.4-9.11.1.964" // grab latest forge
 	assetDir = "run/assets"
