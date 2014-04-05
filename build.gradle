@@ -13,13 +13,12 @@ buildscript {
         compile files(
     	    'dependencies/CodeChickenLib.jar')
     }
+	archives downloadDependencies
 }
 task downloadDependencies(type: MyDownload) {
     sourceUrl = 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
     target = file('dependencies/CodeChickenLib.jar')
 }
-
-compile.dependsOn downloadDependencies
 
 class MyDownload extends DefaultTask {
     @Input
