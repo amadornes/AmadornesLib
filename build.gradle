@@ -9,13 +9,28 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
-    download {
-        src 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
-        dest 'dependencies/CodeChickenLib.jar'
-    }
     dependencies {
         compile files(
     	    'dependencies/CodeChickenLib.jar')
+    }
+}
+task downloadDependencies(type: MyDownload) {
+    sourceUrl = 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
+    target = file('dependencies/CodeChickenLib.jar')
+}
+
+compile.dependsOn downloadDependencies
+
+class MyDownload extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+       ant.get(src: sourceUrl, dest: target)
     }
 }
 
