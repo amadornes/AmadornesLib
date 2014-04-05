@@ -9,28 +9,6 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
-    dependencies {
-        compile files(
-    	    'dependencies/CodeChickenLib.jar')
-    }
-	archives downloadDependencies
-}
-task downloadDependencies(type: MyDownload) {
-    sourceUrl = 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
-    target = file('dependencies/CodeChickenLib.jar')
-}
-
-class MyDownload extends DefaultTask {
-    @Input
-    String sourceUrl
-
-    @OutputFile
-    File target
-
-    @TaskAction
-    void download() {
-       ant.get(src: sourceUrl, dest: target)
-    }
 }
 
 apply plugin: "forge"
@@ -49,6 +27,7 @@ logger.lifecycle ""+version
 version = "${minecraft.version}-$version.${System.getenv().BUILD_NUMBER}"
 
 processResources {
+	
     // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.lang'
