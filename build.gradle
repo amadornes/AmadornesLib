@@ -18,7 +18,7 @@ version = "1.0"
 archivesBaseName = "AmadornesLib"
 
 dependencies {
-	def f = new File(dep/ccl.jar')
+	def f = new File('dep/ccl.jar')
 	if(f.exists()){
 	    f.delete()
 	}
