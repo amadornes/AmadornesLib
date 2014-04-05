@@ -9,15 +9,14 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
-}
-
-download {
-    src 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
-    dest 'dependencies/CodeChickenLib.jar'
-}
-dependencies {
-    compile files(
-	    'dependencies/CodeChickenLib.jar')
+    download {
+        src 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
+        dest 'dependencies/CodeChickenLib.jar'
+    }
+    dependencies {
+        compile files(
+    	    'dependencies/CodeChickenLib.jar')
+    }
 }
 
 apply plugin: "forge"
