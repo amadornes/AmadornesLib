@@ -22,6 +22,7 @@ dependencies {
 	if(f.exists()){
 	    f.delete()
 	}
+	f.mkdirs()
 	f.createNewFile()
     ant.get(src: 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar', dest: 'dep/ccl.jar')
     compile files('dep/ccl.jar')
