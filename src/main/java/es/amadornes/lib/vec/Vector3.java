@@ -264,17 +264,28 @@ public class Vector3 {
     
     public int getBlockX() {
     
-        return (int) x;
+        return (int) Math.floor(x);
     }
     
     public int getBlockY() {
     
-        return (int) y;
+        return (int) Math.floor(y);
     }
     
     public int getBlockZ() {
     
-        return (int) z;
+        return (int) Math.floor(z);
+    }
+    
+    public double distanceTo(Vector3 vec){
+        return distanceTo(vec.x, vec.y, vec.z);
+    }
+    
+    public double distanceTo(double x, double y, double z){
+        double dx = x - this.x;
+        double dy = y - this.y;
+        double dz = z - this.z;
+        return dx * dx + dy * dy + dz * dz;
     }
     
     @Override

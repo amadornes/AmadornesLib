@@ -1,56 +1,48 @@
 buildscript {
     repositories {
-        maven {
-            url "http://maven.ow2.org/maven2/"
-        }
-        maven {
-            url "http://maven.ow2.org/maven2-snapshot/"
-        }
         mavenCentral()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
 
-apply plugin: 'forge'
+downloadDependencies {
+    src 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar'
+    dest 'dependencies/CodeChickenLib.jar'
+}
+dependencies {
+    compile files(
+	    'dependencies/CodeChickenLib.jar')
+}
 
-version="1.0"
-group="es.amadornes.lib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName="AmadornesLib"
+apply plugin: "forge"
+
+group = 'es.amadornes.lib'
+version = "1.0"
+archivesBaseName = "AmadornesLib"
 
 minecraft {
-    version="1.6.4-9.11.1.964"
+	version = "1.6.4-9.11.1.964" // grab latest forge
+	assetDir = "run/assets"
 }
 
-logger.lifecycle "$archivesBaseName-$version"
+logger.lifecycle ""+version
  
-if (System.getenv("BUILD_NUMBER") != null) {
-    version = "MC${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
-}
-else if (new File(projectDir, '.git').exists()) {
-    def repo = grgit.repo('.')
-    version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
-} else {
-    version = "MC${minecraft.version}-$version-DEV"
-}
+version = "${minecraft.version}-$version.${System.getenv().BUILD_NUMBER}"
 
 processResources {
     // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.lang'
         include '**/*.info'
-               
-                expand 'version': project.version, 'mcversion': project.minecraft.version
+        
         // replace version and MCVersion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
     }
  
     // copy everything else, that's not text
@@ -61,6 +53,35 @@ processResources {
        
 }
 
-task cleanTempDir(type: Delete) {
-	delete fileTree(dir: "libs")  
+repositories {
+	mavenCentral()
+}
+
+// change the name of my obfuscated jar
+jar {
+	appendix = 'universal'
+}
+
+// add a source jar
+task sourceJar(type: Jar) {
+	from sourceSets.main.allSource
+	appendix = 'src'
+}
+
+// add a javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	appendix = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+// because the normal output has been made to be obfuscated
+task deobfJar(type: Jar) {
+	from sourceSets.main.output
+	appendix = 'deobf'
+}
+
+artifacts {
+	archives sourceJar
+	archives deobfJar
+	archives javadocJar
 }
