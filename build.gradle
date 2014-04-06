@@ -11,10 +11,6 @@ buildscript {
     }
 }
 
-task cleanTempDir(type: Delete) {
-    delete fileTree(dir: "build/libs")  
-}
-
 apply plugin: "forge"
 
 group = 'es.amadornes.lib'
