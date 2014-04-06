@@ -27,7 +27,7 @@ dependencies {
         f.mkdir()
     }
 	println("  Downloading dependencies!")
-    ant.get(src: 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar', dest: 'dep')
+    ant.get(src: 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-dev-1.6.4-1.0.0.62.jar', dest: 'dep')
 	file("dep/CodeChickenLib-universal-1.6.4-1.0.0.62.jar").renameTo(file("dep/ccl.jar"))
 	println("  Adding dependencies!")
     compile files("dep/ccl.jar")
