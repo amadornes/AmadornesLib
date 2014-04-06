@@ -14,7 +14,7 @@ buildscript {
 apply plugin: "forge"
 
 group = 'es.amadornes.lib'
-version = "1.0"
+version = "1.0.0"
 archivesBaseName = "AmadornesLib"
 
 dependencies {
@@ -89,12 +89,12 @@ task deobfJar(type: Jar) {
     appendix = 'deobf'
 }
 
+task cleanTempDir(type: Delete) {
+    delete fileTree(dir: "build/libs")  
+}
+
 artifacts {
     archives sourceJar
     archives deobfJar
     archives javadocJar
-}
-
-task cleanTempDir(type: Delete) {
-    delete fileTree(dir: "libs")  
 }
