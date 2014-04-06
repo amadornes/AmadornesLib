@@ -18,19 +18,21 @@ version = "1.0"
 archivesBaseName = "AmadornesLib"
 
 dependencies {
-	def f = new File('dep/ccl.jar')
-	if(f.exists()){
-	    f.delete()
-	}
-	f.mkdirs()
-	f.createNewFile()
+    def f = new File('dep/')
+    if(f.exists()){
+        f.delete()
+    }
+    f.mkdirs()
+    if(!f.exists()){
+        f.mkdir()
+    }
     ant.get(src: 'http://files.minecraftforge.net/CodeChickenLib/CodeChickenLib-universal-1.6.4-1.0.0.62.jar', dest: 'dep/ccl.jar')
-    compile files('dep/ccl.jar')
+    compile files("dep/ccl.jar")
 }
 
 minecraft {
-	version = "1.6.4-9.11.1.964" // grab latest forge
-	assetDir = "run/assets"
+    version = "1.6.4-9.11.1.964" // grab latest forge
+    assetDir = "run/assets"
 }
 
 logger.lifecycle ""+version
@@ -38,7 +40,7 @@ logger.lifecycle ""+version
 version = "${minecraft.version}-$version.${System.getenv().BUILD_NUMBER}"
 
 processResources {
-	
+    
     // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.lang'
@@ -57,34 +59,34 @@ processResources {
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 // change the name of my obfuscated jar
 jar {
-	appendix = 'universal'
+    appendix = 'universal'
 }
 
 // add a source jar
 task sourceJar(type: Jar) {
-	from sourceSets.main.allSource
-	appendix = 'src'
+    from sourceSets.main.allSource
+    appendix = 'src'
 }
 
 // add a javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	appendix = 'javadoc'
-	from 'build/docs/javadoc'
+    appendix = 'javadoc'
+    from 'build/docs/javadoc'
 }
 
 // because the normal output has been made to be obfuscated
 task deobfJar(type: Jar) {
-	from sourceSets.main.output
-	appendix = 'deobf'
+    from sourceSets.main.output
+    appendix = 'deobf'
 }
 
 artifacts {
-	archives sourceJar
-	archives deobfJar
-	archives javadocJar
+    archives sourceJar
+    archives deobfJar
+    archives javadocJar
 }
