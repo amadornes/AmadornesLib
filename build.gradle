@@ -10,6 +10,10 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
+def f = new File('build/libs/')
+if(f.exists()){
+    f.delete()
+}
 
 apply plugin: "forge"
 
