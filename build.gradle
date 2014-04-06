@@ -41,7 +41,7 @@ minecraft {
 
 logger.lifecycle ""+version
  
-version = "${minecraft.version}-$version.${System.getenv().BUILD_NUMBER}"
+version = "$version.${System.getenv().BUILD_NUMBER}"
 
 processResources {
     
