@@ -11,6 +11,10 @@ buildscript {
     }
 }
 
+task cleanTempDir(type: Delete) {
+    delete fileTree(dir: "build/libs")  
+}
+
 apply plugin: "forge"
 
 group = 'es.amadornes.lib'
@@ -87,10 +91,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     appendix = 'deobf'
-}
-
-task cleanTempDir(type: Delete) {
-    delete fileTree(dir: "build/libs")  
 }
 
 artifacts {
