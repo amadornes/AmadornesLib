@@ -10,10 +10,6 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
     }
 }
-def buildFolder = new File('build/libs/')
-if(buildFolder.exists()){
-    buildFolder.delete()
-}
 
 apply plugin: "forge"
 
@@ -97,4 +93,8 @@ artifacts {
     archives sourceJar
     archives deobfJar
     archives javadocJar
+}
+
+task cleanTempDir(type: Delete) {
+    delete fileTree(dir: "libs")  
 }
