@@ -1,4 +1,4 @@
-AmadornesLib
+AmadornesLib [1.7.2]
 ============
 
 Amadornes' library for Forge mods
