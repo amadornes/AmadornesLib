@@ -4,17 +4,21 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.amadornes.lib.tile.AmaTileEntity;
+import com.amadornes.lib.tile.ITileContainer;
+import com.amadornes.lib.tile.Tile;
+import com.amadornes.lib.tile.TileEntityTile;
 
 import cpw.mods.fml.relauncher.Side;
 
 public class PacketTileUpdate implements IPacket {
 
-	private AmaTileEntity te;
+	private Tile tile;
+	private TileEntityTile parent;
 	private NBTTagCompound tag;
 
-	public PacketTileUpdate(AmaTileEntity te) {
-		this.te = te;
+	public PacketTileUpdate(TileEntityTile parent, Tile tile) {
+		this.parent = parent;
+		this.tile = tile;
 	}
 
 	public PacketTileUpdate() {
@@ -22,39 +26,39 @@ public class PacketTileUpdate implements IPacket {
 
 	@Override
 	public void write(NBTTagCompound tag) {
-		tag.setInteger("x", te.xCoord);
-		tag.setInteger("y", te.yCoord);
-		tag.setInteger("z", te.zCoord);
-		tag.setInteger("dim", te.getWorldObj().provider.dimensionId);
-		
+		tag.setInteger("x", tile.getX());
+		tag.setInteger("y", tile.getY());
+		tag.setInteger("z", tile.getZ());
+		tag.setInteger("dim", tile.getWorld().provider.dimensionId);
+
 		NBTTagCompound t = new NBTTagCompound();
-		te.writeDescription(t);
+		tile.writeDescription(t);
 		tag.setTag("desc", t);
 	}
 
 	@Override
 	public void read(NBTTagCompound tag) {
 		int dim = tag.getInteger("dim");
-		if(Minecraft.getMinecraft().theWorld == null)
+		if (Minecraft.getMinecraft().theWorld == null)
 			return;
-		if(Minecraft.getMinecraft().theWorld.provider.dimensionId != dim)
+		if (Minecraft.getMinecraft().theWorld.provider.dimensionId != dim)
 			return;
-		
+
 		World w = Minecraft.getMinecraft().theWorld;
 
 		int x = tag.getInteger("x");
 		int y = tag.getInteger("y");
 		int z = tag.getInteger("z");
-		
-		this.te = (AmaTileEntity) w.getTileEntity(x, y, z);
+
+		this.parent = (TileEntityTile) w.getTileEntity(x, y, z);
+		this.tile = this.parent.getContainedTile();
 		this.tag = tag.getCompoundTag("desc");
 	}
 
 	@Override
 	public void handle(Side side) {
-		if(side.isClient()){
-			te.readDescription(tag);
-		}
+		if (side.isClient())
+			tile.readDescription(tag);
 	}
 
 }

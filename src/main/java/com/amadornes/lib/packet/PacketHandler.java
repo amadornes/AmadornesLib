@@ -85,6 +85,6 @@ public class PacketHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
 	}
 
 	private static void setup() {
-		instance().registerPacket(0, PacketTileUpdate.class);
+		instance().registerPacket(0, PacketTileEntityUpdate.class);
 	}
 }

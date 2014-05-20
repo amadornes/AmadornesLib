@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.Explosion;
 
 import com.amadornes.lib.packet.PacketHandler;
-import com.amadornes.lib.packet.PacketTileUpdate;
+import com.amadornes.lib.packet.PacketTileEntityUpdate;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
@@ -59,7 +59,7 @@ public abstract class AmaTileEntity extends TileEntity {
 
 	public void sendUpdatePacket() {
 		if (FMLCommonHandler.instance().getEffectiveSide().isServer())
-			PacketHandler.sendToAllClients(new PacketTileUpdate(this));
+			PacketHandler.sendToAllClients(new PacketTileEntityUpdate(this));
 	}
 
 }
