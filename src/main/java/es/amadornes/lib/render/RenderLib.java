@@ -15,11 +15,12 @@ public class RenderLib {
     
     }
     
-    private static TranslateMode        mode      = TranslateMode.RELATIVE;
-    private static final List<Rotation> rotations = new ArrayList<Rotation>();
-    private static double               scaleX    = 1;
-    private static double               scaleY    = 1;
-    private static double               scaleZ    = 1;
+    private static TranslateMode        mode        = TranslateMode.RELATIVE;
+    private static final List<Rotation> rotations   = new ArrayList<Rotation>();
+    private static double               scaleX      = 1;
+    private static double               scaleY      = 1;
+    private static double               scaleZ      = 1;
+    private static float               lightmapPos = 0;
     
     public static void setMode(TranslateMode mode) {
     
@@ -69,7 +70,7 @@ public class RenderLib {
     
     public static void resetScale() {
     
-        GL11.glScaled(-scaleX, -scaleY, -scaleZ);
+        GL11.glScaled(1 / scaleX, 1 / scaleY, 1 / scaleZ);
         
         scaleX = 1;
         scaleY = 1;
@@ -217,39 +218,53 @@ public class RenderLib {
         GL11.glDisable(GL11.GL_DEPTH_TEST);
     }
     
-    public static void disableLightingCheck(){
+    public static void disableLightingCheck() {
+    
+        setLightmapPosition(1);
+    }
+    
+    public static void setLightmapPosition(float f) {
+    
         GL11.glDisable(GL11.GL_LIGHTING);
-        int j = 235;
+        float j = 235F * f;
         float k = j % 65536;
         float l = j / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k, (float)l);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,
+                (float) k, (float) l);
+        lightmapPos = f;
     }
     
-    public static void renderObject(RenderedObject obj){
-        obj.render();
+    
+    public static float getLastLightmapPosition() {
+    
+        return lightmapPos;
     }
     
-    public static void setColor(double r, double g, double b, double a){
-        if(a >= 0){
+    public static void setColor(double r, double g, double b, double a) {
+    
+        if (a >= 0) {
             GL11.glColor4d(r, g, b, a);
-        }else{
+        } else {
             GL11.glColor3d(r, g, b);
         }
     }
     
-    public static void setColor(int rgb){
+    public static void setColor(int rgb) {
+    
         int red = (rgb & 0xFF000000) >> 24;
         int green = (rgb & 0x00FF0000) >> 16;
         int blue = (rgb & 0x0000FF00) >> 8;
         
-        setColor(red/255D, green/255D, blue/255D, -1);
+        setColor(red / 255D, green / 255D, blue / 255D, -1);
     }
     
-    public static void c(double r, double g, double b, double a){
+    public static void c(double r, double g, double b, double a) {
+    
         setColor(r, g, b, a);
     }
     
-    public static void c(int rgb){
+    public static void c(int rgb) {
+    
         setColor(rgb);
     }
     

@@ -18,7 +18,16 @@ public class ReflectUtils {
         try {
             Field f = object.getClass().getDeclaredField(name);
             
-            return (T) f.get(object);
+            boolean accessible = f.isAccessible();
+            if(!accessible)
+                f.setAccessible(true);
+            
+            T val = (T) f.get(object);
+            
+            if(!accessible)
+                f.setAccessible(false);
+            
+            return val;
         } catch (Exception ex) {
         }
         
@@ -26,6 +35,7 @@ public class ReflectUtils {
             return getFieldValue(object, c.getSuperclass(), name);
         } catch (Exception ex) {
         }
+        System.out.println("ERR");
         return null;
     }
     
