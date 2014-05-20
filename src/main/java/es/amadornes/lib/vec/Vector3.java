@@ -226,10 +226,15 @@ public class Vector3 {
     }
     
     public Block getBlock() {
+        
+        return getBlock(true);
+    }
+    
+    public Block getBlock(boolean airIsNull) {
     
         if (hasWorld()) {
             int id = w.getBlockId((int) x, (int) y, (int) z);
-            if (id == 0) return null;
+            if (airIsNull && id == 0) return null;
             return Block.blocksList[id];
         }
         return null;
@@ -275,6 +280,10 @@ public class Vector3 {
     public int getBlockZ() {
     
         return (int) Math.floor(z);
+    }
+    
+    public Vector3 getImmutableCopy(){
+        return new ImmutableVector3(this);
     }
     
     public double distanceTo(Vector3 vec){
