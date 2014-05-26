@@ -5,37 +5,18 @@ import java.lang.reflect.Method;
 
 public class ReflectUtils {
     
+    @SuppressWarnings("unchecked")
     public static <T> T getFieldValue(Object object, String name) {
     
         if (object == null) return null;
         
-        return getFieldValue(object, object.getClass(), name);
-    }
-    
-    @SuppressWarnings("unchecked")
-    private static <T> T getFieldValue(Object object, Class<?> c, String name) {
-    
-        try {
-            Field f = object.getClass().getDeclaredField(name);
-            
-            boolean accessible = f.isAccessible();
-            if(!accessible)
-                f.setAccessible(true);
-            
-            T val = (T) f.get(object);
-            
-            if(!accessible)
-                f.setAccessible(false);
-            
-            return val;
-        } catch (Exception ex) {
-        }
+        Field f = getField(object, name);
+        if (f == null) return null;
         
         try {
-            return getFieldValue(object, c.getSuperclass(), name);
-        } catch (Exception ex) {
+            return (T) f.get(object);
+        } catch (Exception e) {
         }
-        System.out.println("ERR");
         return null;
     }
     
