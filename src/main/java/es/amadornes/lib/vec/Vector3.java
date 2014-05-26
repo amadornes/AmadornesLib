@@ -216,13 +216,13 @@ public class Vector3 {
     public int getBlockId() {
     
         if (hasWorld()) { return w.getBlockId((int) x, (int) y, (int) z); }
-        return -1;
+        return 0;
     }
     
     public int getBlockMeta() {
     
         if (hasWorld()) { return w.getBlockMetadata((int) x, (int) y, (int) z); }
-        return -1;
+        return 0;
     }
     
     public Block getBlock() {
