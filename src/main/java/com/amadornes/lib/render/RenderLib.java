@@ -15,12 +15,12 @@ public class RenderLib {
     
     }
     
-    private static TranslateMode        mode        = TranslateMode.RELATIVE;
-    private static final List<Rotation> rotations   = new ArrayList<Rotation>();
-    private static double               scaleX      = 1;
-    private static double               scaleY      = 1;
-    private static double               scaleZ      = 1;
-    private static float               lightmapPos = 0;
+    private static TranslateMode        mode      = TranslateMode.RELATIVE;
+    private static final List<Rotation> rotations = new ArrayList<Rotation>();
+    private static double               scaleX    = 1;
+    private static double               scaleY    = 1;
+    private static double               scaleZ    = 1;
+    private static float                lightmapX = -1, lightmapY = -1;
     
     public static void setMode(TranslateMode mode) {
     
@@ -223,23 +223,6 @@ public class RenderLib {
         setLightmapPosition(1);
     }
     
-    public static void setLightmapPosition(float f) {
-    
-        GL11.glDisable(GL11.GL_LIGHTING);
-        float j = 235F * f;
-        float k = j % 65536;
-        float l = j / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,
-                (float) k, (float) l);
-        lightmapPos = f;
-    }
-    
-    
-    public static float getLastLightmapPosition() {
-    
-        return lightmapPos;
-    }
-    
     public static void setColor(double r, double g, double b, double a) {
     
         if (a >= 0) {
@@ -266,6 +249,26 @@ public class RenderLib {
     public static void c(int rgb) {
     
         setColor(rgb);
+    }
+    
+    public static void setLightmapPosition(double pos) {
+    
+        if (lightmapX == -1 || lightmapY == -1) {
+            lightmapX = OpenGlHelper.lastBrightnessX;
+            lightmapY = OpenGlHelper.lastBrightnessY;
+        }
+        
+        float j = (float) (235F * pos);
+        float k = j % 65536;
+        float l = j / 65536;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, k, l);
+    }
+    
+    public static void resetLightmap() {
+    
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapY, lightmapY);
+        lightmapX = -1;
+        lightmapY = -1;
     }
     
 }
