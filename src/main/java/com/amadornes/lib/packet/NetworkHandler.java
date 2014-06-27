@@ -21,7 +21,6 @@ public class NetworkHandler {
     public static void init() {
     
         registerPacket(0, PacketTileEntityUpdate.class);
-        registerPacket(1, PacketTileUpdate.class);
     }
     
     @SuppressWarnings("unchecked")
