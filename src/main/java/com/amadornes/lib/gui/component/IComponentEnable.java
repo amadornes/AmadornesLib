@@ -1,6 +1,6 @@
 package com.amadornes.lib.gui.component;
 
-public interface IEnable {
+public interface IComponentEnable {
 
 	public void enable();
 

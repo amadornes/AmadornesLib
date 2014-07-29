@@ -1,37 +1,60 @@
 package com.amadornes.lib.gui.component;
 
-import com.amadornes.lib.gui.Appearance;
+import com.amadornes.lib.gui.IGui;
 
-public abstract class Component {
-
-	protected int x, y;
-
-	public abstract void render(Appearance appearance, int mx, int my, float f);
-
-	public Appearance getCustomAppearance() {
-		return null;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void onMouseClick(int x, int y, int btn) {
-	}
-
-	public void onKeyPress(int key, char c) {
-	}
-
+public abstract class Component implements IComponent {
+    
+    protected int   x, y;
+    private boolean hasFocus = false;
+    protected IGui  parent;
+    
+    @Override
+    public abstract void render(int mx, int my, float f);
+    
+    @Override
+    public void setX(int x) {
+    
+        this.x = x;
+    }
+    
+    @Override
+    public void setY(int y) {
+    
+        this.y = y;
+    }
+    
+    @Override
+    public int getX() {
+    
+        return x;
+    }
+    
+    @Override
+    public int getY() {
+    
+        return y;
+    }
+    
+    @Override
+    public void onMouseClick(int x, int y, int btn) {
+    
+    }
+    
+    @Override
+    public void onKeyPress(int key, char c) {
+    
+    }
+    
+    @Override
+    public boolean hasFocus() {
+    
+        return hasFocus;
+    }
+    
+    @Override
+    public IGui getParent() {
+    
+        return parent;
+    }
+    
 }

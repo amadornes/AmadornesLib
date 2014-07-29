@@ -1,6 +1,6 @@
 package com.amadornes.lib.gui.component;
 
-public interface ISize {
+public interface IComponentSize {
 
 	public void setWidth(int width);
 
